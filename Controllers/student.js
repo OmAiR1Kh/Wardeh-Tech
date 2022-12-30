@@ -19,8 +19,22 @@ const getAllStudents = expressAsyncHandler(async (req, res, next) => {
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
     const students = await Student.find();
-    const result = students.slice(startIndex, endIndex);
-    res.status(200).json(result);
+    const results = {};
+    if (startIndex > 0) {
+      results.previous = {
+        page: page - 1,
+        limit: limit,
+      };
+    }
+
+    if (endIndex < students.length()) {
+      results.next = {
+        page: page + 1,
+        limit: limit,
+      };
+    }
+    results.result = students.slice(startIndex, endIndex);
+    res.status(200).json(results);
   } catch (error) {
     next(error);
   }
