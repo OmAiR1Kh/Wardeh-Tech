@@ -21,7 +21,11 @@ app.use("/api/users", userRoutes);
 
 // MongoDB Connection
 mongoose
-  .connect(process.env.DB_URI)
+  .connect(process.env.DB_URI,{
+    dbName: 'university',
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to Database successfully");
   })
