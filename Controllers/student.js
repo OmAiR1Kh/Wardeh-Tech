@@ -27,7 +27,7 @@ const getAllStudents = expressAsyncHandler(async (req, res, next) => {
       };
     }
 
-    if (endIndex < students.length()) {
+    if (endIndex < students.length) {
       results.next = {
         page: page + 1,
         limit: limit,
