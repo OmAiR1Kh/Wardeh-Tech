@@ -14,8 +14,13 @@ const createStudent = expressAsyncHandler(async (req, res, next) => {
 
 const getAllStudents = expressAsyncHandler(async (req, res, next) => {
   try {
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
     const students = await Student.find();
-    res.status(200).json(students);
+    const result = students.slice(startIndex, endIndex);
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
